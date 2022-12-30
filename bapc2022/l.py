@@ -1,15 +1,17 @@
 n = int(input())
 
 
+grid_size = 100
 
-grid = [[[[] for _ in range(100)] for _ in range(100)] for _ in range(100)]
-
+grid = [[[[] for _ in range(grid_size)] for _ in range(grid_size)] for _ in range(grid_size)]
+coords_to_grid = int(1e9) // grid_size
 planets = []
+
 for _ in range(n):
 
     x,y,z = map(int, input().split())
     planets.append((x,y,z))
-    grid[x//10_000_000][y//10_000_000][z//10_000_000].append((x,y,z))
+    grid[x//coords_to_grid][y//coords_to_grid][z//coords_to_grid].append((x,y,z))
 
 
 def dst(p1, p2):
@@ -22,14 +24,14 @@ ans = float("inf")
 for x,y,z in planets:
     delta = [(0,0,-1),(0,-1,0),(-1,0,0),(1,0,0),(0,1,0),(0,0,1)]
 
-    for planet in grid[x//10_000_000][y//10_000_000][z//10_000_000]:
+    for planet in grid[x//coords_to_grid][y//coords_to_grid][z//coords_to_grid]:
         if planet == (x,y,z):
             continue
         ans = min(ans, dst((x,y,z), planet))
     for dx,dy,dz in delta:
-        xx = dx + x//10_000_000
-        yy = dy + y//10_000_000
-        zz = dz + z//10_000_000
+        xx = dx + x//coords_to_grid
+        yy = dy + y//coords_to_grid
+        zz = dz + z//coords_to_grid
         if 0 <= xx < len(grid) and 0 <= yy < len(grid) and 0<=zz < len(grid):
             for planet in grid[xx][yy][zz]:
                 ans = min(ans, dst((x,y,z), planet))
