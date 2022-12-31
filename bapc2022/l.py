@@ -22,19 +22,17 @@ def dst(p1, p2):
 
 ans = float("inf")
 for x,y,z in planets:
-    delta = [(0,0,-1),(0,-1,0),(-1,0,0),(1,0,0),(0,1,0),(0,0,1)]
-
-    for planet in grid[x//coords_to_grid][y//coords_to_grid][z//coords_to_grid]:
-        if planet == (x,y,z):
-            continue
-        ans = min(ans, dst((x,y,z), planet))
-    for dx,dy,dz in delta:
-        xx = dx + x//coords_to_grid
-        yy = dy + y//coords_to_grid
-        zz = dz + z//coords_to_grid
-        if 0 <= xx < len(grid) and 0 <= yy < len(grid) and 0<=zz < len(grid):
-            for planet in grid[xx][yy][zz]:
-                ans = min(ans, dst((x,y,z), planet))
+    for dx in range(-1,2):
+        for dy in range(-1,2):
+            for dz in range(-1,2):
+                xx = dx + x//coords_to_grid
+                yy = dy + y//coords_to_grid
+                zz = dz + z//coords_to_grid
+                if 0 <= xx < len(grid) and 0 <= yy < len(grid) and 0<=zz < len(grid):
+                    for planet in grid[xx][yy][zz]:
+                        if planet == (x,y,z):
+                            continue
+                        ans = min(ans, dst((x,y,z), planet))
     
 print(ans)
 
