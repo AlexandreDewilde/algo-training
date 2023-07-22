@@ -1,2 +1,6 @@
-input()
-print((set(map(int, input().split()))^set(map(int, input().split()))).pop())
+n = int(input())
+x = set(map(int, input().split()))
+
+y = set(map(int, input().split()))
+
+print(*x^y)
